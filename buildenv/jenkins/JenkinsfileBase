@@ -564,7 +564,7 @@ def runTest( ) {
 						makeTest("${RUNTEST_CMD}")
 					}
 				}
-				else if (env.SPEC.startsWith('mac')) {
+				else {
 					wrap([$class: 'Xvfb', autoDisplayName: true]) {
 						def DISPLAY = sh (
 							script: 'ps -f  | grep \'[X]vfb\' | awk \'{print \$9}\'',
@@ -576,9 +576,9 @@ def runTest( ) {
 						makeTest("${RUNTEST_CMD}")
 					}
 				} 
-				else {
-					makeTest("${RUNTEST_CMD}")
-				}
+				// else {
+				// 	makeTest("${RUNTEST_CMD}")
+				// }
 				iterationCount++
 			}
 		}
