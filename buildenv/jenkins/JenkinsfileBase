@@ -563,10 +563,22 @@ def runTest( ) {
 						echo "env.DISPLAY is ${env.DISPLAY}"
 						makeTest("${RUNTEST_CMD}")
 					}
-				} 
-				else {
-					makeTest("${RUNTEST_CMD}")
 				}
+				else {
+					wrap([$class: 'Xvfb', autoDisplayName: true]) {
+						def DISPLAY = sh (
+							script: 'ps -f  | grep \'[X]vfb\' | awk \'{print \$9}\'',
+							returnStdout: true
+						).trim()
+						env.DISPLAY = "${DISPLAY}"
+						echo "env.DISPLAY is ${env.DISPLAY}"
+						echo "----- MAC WINDOWS X SERVER ------"
+						makeTest("${RUNTEST_CMD}")
+					}
+				}
+				// else {
+				// 	makeTest("${RUNTEST_CMD}")
+				// }
 				iterationCount++
 			}
 		}
