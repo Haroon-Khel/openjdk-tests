@@ -94,7 +94,7 @@ JTREG_KEY_OPTIONS :=
 VMOPTION_HEADLESS :=
 ifneq ($(PLATFORM),x86-64_alpine-linux) 
 	JTREG_KEY_OPTIONS := -k:'!headful'
-	VMOPTION_HEADLESS := -Djava.awt.headless=true
+# VMOPTION_HEADLESS := -Djava.awt.headless=true
 endif
 JTREG_BASIC_OPTIONS += $(JTREG_KEY_OPTIONS)
 
