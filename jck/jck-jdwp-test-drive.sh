@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Query list of tests
+# In a for loop over the tests, run GEN_SUMMARY_GENERIC over each test, using $(GEN_JTB_GENERIC) tests=vm/$test testsuite=RUNTIME concurrency=1
+# And then run $(EXEC_RUNTIME_TEST)
+
+jckAgentPID=0
+harnessExitCode=0
+jckHarnessPID=0
+
+java -cp $jck_root_path/lib/javatest.jar com.sun.javatest.finder.ShowTests -finder com.sun.javatest.finder.HTMLTestFinder -end $jck_root_path/tests/testsuite.html -initial vm/jdwp | tr -d "[:blank:]" | while read -r test;
+do
+    # $(GEN_JTB_GENERIC) tests=vm/jdwp testsuite=RUNTIME concurrency=1
+    eval "$1 tests=$test testsuite=RUNTIME concurrency=1"
+    # Start agent
+    eval "$2"
+    jckAgentPID=$!
+    # Start harness
+    eval "$3"
+    harnessExitCode=$?
+done
