@@ -30,5 +30,5 @@ do
         wait $jckHarnessPID
         harnessExitCode=$?
     fi
-    kill -9 jckAgentPID
+    kill -9 $jckAgentPID
 done
