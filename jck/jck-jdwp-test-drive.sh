@@ -7,6 +7,7 @@
 jckAgentPID=0
 harnessExitCode=0
 jckHarnessPID=0
+
 testJDK=$4
 jckRootDir=$5/JCK-runtime-$6
 
@@ -19,5 +20,15 @@ do
     jckAgentPID=$!
     # Start harness
     eval "$3"
-    harnessExitCode=$?
+    jckHarnessPID=$!
+    sleep 60
+    if kill -s 0 $jckHarnessPID 2>nul; then
+        echo "Testcase $test : Process $jckHarnessPID is still running after 60 seconds... killing..."
+        kill -9 $jckHarnessPID
+        harnessExitCode=124
+    else
+        wait $jckHarnessPID
+        harnessExitCode=$?
+    fi
+    kill -9 jckAgentPID
 done
