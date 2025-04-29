@@ -21,7 +21,7 @@ do
     # Start harness
     eval "$3"
     jckHarnessPID=$!
-    sleep 60
+    sleep 30
     if kill -s 0 $jckHarnessPID 2>nul; then
         echo "Testcase $test : Process $jckHarnessPID is still running after 60 seconds... killing..."
         kill -9 $jckHarnessPID
