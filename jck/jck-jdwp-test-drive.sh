@@ -7,8 +7,9 @@
 jckAgentPID=0
 harnessExitCode=0
 jckHarnessPID=0
+testJDK=$4
 
-java -cp $jck_root_path/lib/javatest.jar com.sun.javatest.finder.ShowTests -finder com.sun.javatest.finder.HTMLTestFinder -end $jck_root_path/tests/testsuite.html -initial vm/jdwp | tr -d "[:blank:]" | while read -r test;
+$testJDK/bin/java -cp $jck_root_path/lib/javatest.jar com.sun.javatest.finder.ShowTests -finder com.sun.javatest.finder.HTMLTestFinder -end $jck_root_path/tests/testsuite.html -initial vm/jdwp | tr -d "[:blank:]" | while read -r test;
 do
     # $(GEN_JTB_GENERIC) tests=vm/jdwp testsuite=RUNTIME concurrency=1
     eval "$1 tests=$test testsuite=RUNTIME concurrency=1"
